@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clipper>
+	<task name="bic" type="insert">
+		<value>COBADEFFXXX</value>
+	</task>
+	<task name="iban" type="insert">
+		<value>DE10300400000181148806</value>
+	</task>
+	<task name="blz" type="insert">
+		<value>30040000</value>
+	</task>
+	<task name="konto" type="insert">
+		<value>181148804</value>
+	</task>
+	<task name="rücklastschrift.debit" type="filecreate">
+		<value>/home/musil/tools/cliptool/rlsDebit.template</value>
+	</task>
+	<task name="oneline" type="oneline" />
+</clipper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clipper>
+	<task name="iban" type="InSeRt">
+		<value>12345967890</value>
+	</task>
+	<task name="bic" type="insert">
+		<value>abcdefg</value>
+	</task>
+	<task name="rlsDebit" type="filecreate">
+		<value>file:///tmp/demo.template</value>
+	</task>
+</clipper>
