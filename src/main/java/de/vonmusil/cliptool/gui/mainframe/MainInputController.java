@@ -43,27 +43,26 @@ public class MainInputController extends AbstractController<MainInputModel, Main
 	{
 		final BeanAdapter<CliptoolClipboard> clipboardAdapter = new BeanAdapter<CliptoolClipboard>(CliptoolClipboard.getInstance(), true);
 		final BeanAdapter<MainInputModel> modelAdapter = new BeanAdapter<MainInputModel>(getData(), true);
-		
+
 		Bindings.bind(getComponent().getCommandInputBox(), selectedCommand);
 
 		final DelayedWriteValueModel delayedWriteModel = new DelayedWriteValueModel(clipboardAdapter.getValueModel(CliptoolClipboard.CLIPBOARD_CONTENT), 1000);
-		
+
 		Bindings.bind(getComponent().getTxtClipboardContent(), delayedWriteModel);
-		
+
 		Bindings.bind(getComponent().getLblStatusLabel(), modelAdapter.getValueModel(MainInputModel.STATUS_MESSAGE));
 
 		final JXButton btnExecute = getComponent().getBtnExecute();
 
 		final KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, Event.ALT_MASK);
-        btnExecute.setAction(getAction(EXECUTE_COMMAND));
+		btnExecute.setAction(getAction(EXECUTE_COMMAND));
 		btnExecute.getActionMap().put(EXECUTE_COMMAND, getAction(EXECUTE_COMMAND));
-        
+
 		btnExecute.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStroke, EXECUTE_COMMAND);
-		
+
 		getComponent().getBtnCancel().setAction(getAction(CANCEL));
 
 		getComponent().getTxtClipboardContent().setAction(getAction(EXECUTE_COMMAND));
-
 
 	}
 
@@ -74,16 +73,17 @@ public class MainInputController extends AbstractController<MainInputModel, Main
 		AutoCompleteDecorator.decorate(inputBox);
 
 		final List<Command> list = CommandRepository.instance().getCommands();
+
 		selectedCommand = new SelectionInList<>(list);
 
 		if (selectedCommand.getSize() > 0)
 		{
 			selectedCommand.setSelectionIndex(0);
 		}
-		
+
 		printStatusMessage("started...");
 	}
-	
+
 	@Actionmethod(caption = "Execute", name = EXECUTE_COMMAND)
 	public void executeCommand()
 	{
@@ -98,7 +98,7 @@ public class MainInputController extends AbstractController<MainInputModel, Main
 		}
 
 		selection.getProcessor().process();
-		
+
 		printStatusMessage("Executed: " + selection.toString());
 	}
 
@@ -109,27 +109,28 @@ public class MainInputController extends AbstractController<MainInputModel, Main
 		Application.getInstance().shutdown();
 	}
 
-    private void printStatusMessage(String message)
-    {
-        getData().setStatusMessage(message);
-        
-        final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-    
-            @Override
-            protected Void doInBackground() throws Exception
-            {
-                Thread.sleep(2500);
-                
-                return null;
-            }
-    
-            @Override
-            protected void done()
-            {
-                getData().setStatusMessage(" ");
-            }
-        };
-        
-        worker.execute();
-    }
+	private void printStatusMessage(String message)
+	{
+		getData().setStatusMessage(message);
+
+		final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>()
+		{
+
+			@Override
+			protected Void doInBackground() throws Exception
+			{
+				Thread.sleep(2500);
+
+				return null;
+			}
+
+			@Override
+			protected void done()
+			{
+				getData().setStatusMessage(" ");
+			}
+		};
+
+		worker.execute();
+	}
 }

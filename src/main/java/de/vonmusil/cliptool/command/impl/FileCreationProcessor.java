@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,24 +59,24 @@ public class FileCreationProcessor implements CommandProcessor
 		final String content = loadContent();
 
 		final TemplateParser parser = new TemplateParser(content);
-		final List<String> variables = parser.findVariables();
-		
-		final ParamEditModel parameters = ParamEditModelBuilder.newBuilder() 
-            .addParameter("clipboard", CliptoolClipboard.getInstance().getClipboardContent())
-		    .addParameters(variables) 
-		    .create();
-		
+
+		final Map<String, String> values = parser.findDefaultValues();
+
+		final ParamEditModel parameters = ParamEditModelBuilder.newBuilder()
+				.addParameters(values)
+				.create();
+
 		ParamInputController.showDialog(parameters);
 
 		if (parameters.isCancelled())
 		{
-		    return;
+			return;
 		}
-		
+
 		final String result = newProcessor()
-		        .setTemplate(content)
-		        .bind(parameters.getParameters())
-		        .process();
+				.setTemplate(content)
+				.bind(parameters.getParameters())
+				.process();
 
 		final Path path;
 

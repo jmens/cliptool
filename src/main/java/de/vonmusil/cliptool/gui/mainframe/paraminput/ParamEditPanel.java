@@ -4,6 +4,7 @@ import static java.text.MessageFormat.format;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,8 @@ public class ParamEditPanel extends JXPanel
 		this.parameters.clear();
 		this.parameters.addAll(list);
 
+		Collections.sort(this.parameters);
+
 		initializeLayoutManager();
 
 		int row = 2;
@@ -70,7 +73,7 @@ public class ParamEditPanel extends JXPanel
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 
-				ColumnSpec.decode("default:grow"),
+				ColumnSpec.decode("[150dlu,pref,400dlu]:grow"),
 				FormFactory.RELATED_GAP_COLSPEC, };
 
 		final RowSpecBuilder builder = new RowSpecBuilder(FormFactory.RELATED_GAP_ROWSPEC);

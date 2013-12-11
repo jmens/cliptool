@@ -49,8 +49,8 @@ public class ParamInputDialog extends JDialog
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
+				cancelButton = new JButton("Canceled");
+				cancelButton.setActionCommand("Canceled");
 				buttonPane.add(cancelButton);
 			}
 			{

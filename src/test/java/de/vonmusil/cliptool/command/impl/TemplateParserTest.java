@@ -1,14 +1,15 @@
 package de.vonmusil.cliptool.command.impl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
-
-import de.vonmusil.cliptool.command.impl.TemplateParser;
 
 public class TemplateParserTest
 {
@@ -74,6 +75,40 @@ public class TemplateParserTest
 		final List<String> variables = parser.findVariables();
 
 		assertThat(variables, hasSize(0));
+	}
+
+	@Test
+	public void testFindNoDefaultValue()
+	{
+		final TemplateParser parser = new TemplateParser("");
+
+		final Map<String, String> values = parser.findDefaultValues();
+
+		assertThat(values.size(), equalTo(0));
+	}
+
+	@Test
+	public void testFindDefaultValue()
+	{
+		final TemplateParser parser = new TemplateParser("${x|1}");
+
+		final Map<String, String> values = parser.findDefaultValues();
+
+		assertThat(values.size(), equalTo(1));
+		assertThat(values, hasEntry("x", "1"));
+	}
+
+	@Test
+	public void testFindDefaulValuesMixed()
+	{
+		final TemplateParser parser = new TemplateParser("This ${x|1} is ${y} a ${name|me} test.");
+
+		final Map<String, String> values = parser.findDefaultValues();
+
+		assertThat(values.size(), equalTo(3));
+		assertThat(values, hasEntry("x", "1"));
+		assertThat(values, hasEntry("y", ""));
+		assertThat(values, hasEntry("name", "me"));
 	}
 
 }
