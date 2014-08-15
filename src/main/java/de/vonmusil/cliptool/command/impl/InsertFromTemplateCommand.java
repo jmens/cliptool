@@ -1,7 +1,5 @@
 package de.vonmusil.cliptool.command.impl;
 
-import java.nio.file.Path;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +9,6 @@ import de.vonmusil.cliptool.gui.mainframe.CliptoolClipboard;
 
 public class InsertFromTemplateCommand extends AbstractFiletemplateProcessor implements CommandProcessor, Command
 {
-	private static final Logger LOG = LoggerFactory.getLogger(InsertFromTemplateCommand.class);
-
 	protected InsertFromTemplateCommand(String template)
 	{
 		super(template);
